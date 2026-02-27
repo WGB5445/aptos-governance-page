@@ -1,4 +1,4 @@
-import {Types} from "aptos";
+import {InputGenerateTransactionPayloadData} from "@aptos-labs/ts-sdk";
 import useSubmitTransaction from "./useSubmitTransaction";
 
 const useSubmitVote = () => {
@@ -14,11 +14,10 @@ const useSubmitVote = () => {
     shouldPass: boolean,
     ownerAccountAddr: string,
   ) {
-    const payload: Types.TransactionPayload = {
-      type: "entry_function_payload",
+    const payload: InputGenerateTransactionPayloadData = {
       function: "0x1::aptos_governance::vote",
-      type_arguments: [],
-      arguments: [ownerAccountAddr, proposalId, shouldPass],
+      typeArguments: [],
+      functionArguments: [ownerAccountAddr, proposalId, shouldPass],
     };
 
     await submitTransaction(payload);

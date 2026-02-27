@@ -12,15 +12,19 @@ import {useGlobalState} from "../../context/globalState";
 import {NetworkName} from "../../constants";
 
 function getGraphqlURI(networkName: NetworkName): string | undefined {
+  const envMainnet = import.meta.env.VITE_INDEXER_GRAPHQL_MAINNET;
+  const envTestnet = import.meta.env.VITE_INDEXER_GRAPHQL_TESTNET;
+  const envDevnet = import.meta.env.VITE_INDEXER_GRAPHQL_DEVNET;
+
   switch (networkName) {
     case "mainnet":
-      return process.env.REACT_APP_INDEXER_GRAPHQL_MAINNET;
+      return envMainnet || "https://api.mainnet.aptoslabs.com/v1/graphql";
     case "testnet":
-      return process.env.REACT_APP_INDEXER_GRAPHQL_TESTNET;
+      return envTestnet || "https://api.testnet.aptoslabs.com/v1/graphql";
     case "Devnet":
-      return process.env.REACT_APP_INDEXER_GRAPHQL_DEVNET;
+      return envDevnet || "https://api.devnet.aptoslabs.com/v1/graphql";
     case "local":
-      return undefined;
+      return "http://127.0.0.1:8090/v1/graphql";
     default:
       return undefined;
   }

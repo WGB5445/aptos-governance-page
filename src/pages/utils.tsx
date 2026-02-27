@@ -1,7 +1,13 @@
 import moment from "moment";
 import Box from "@mui/material/Box";
 import {Typography, useTheme} from "@mui/material";
-import {AptosClient, AptosAccount, HexString, MaybeHexString} from "aptos";
+import {
+  Account,
+  Aptos,
+  Hex,
+  InputGenerateTransactionPayloadData,
+} from "@aptos-labs/ts-sdk";
+import {MaybeHexString} from "../context/wallet/context";
 import {Proposal, ProposalStatus, ProposalVotingState} from "./Types";
 import {
   primaryColor,
@@ -86,21 +92,23 @@ export function getProposalTimeRemaining(
 }
 
 export function getHexString(str: string): string {
-  return HexString.fromUint8Array(new TextEncoder().encode(str)).hex();
+  return Hex.fromHexInput(new TextEncoder().encode(str)).toString();
 }
 
 export async function doTransaction(
-  account: AptosAccount,
-  client: AptosClient,
-  payload: any,
+  account: Account,
+  client: Aptos,
+  payload: InputGenerateTransactionPayloadData,
 ) {
-  const txnRequest = await client.generateTransaction(
-    account.address(),
-    payload,
-  );
-  const signedTxn = await client.signTransaction(account, txnRequest);
-  const transactionRes = await client.submitTransaction(signedTxn);
-  await client.waitForTransaction(transactionRes.hash);
+  const transaction = await client.transaction.build.simple({
+    sender: account.accountAddress,
+    data: payload,
+  });
+  const transactionRes = await client.signAndSubmitTransaction({
+    signer: account,
+    transaction,
+  });
+  await client.waitForTransaction({transactionHash: transactionRes.hash});
   return transactionRes;
 }
 

@@ -7,7 +7,7 @@ import VoteButtons from "../../Proposal/card/VoteButtons";
 import {AddressToVoteMap, Proposal} from "../../Types";
 import {isVotingClosed} from "../../utils";
 import hasAddressVoted from "../api/hasAddressVoted";
-import {MaybeHexString} from "aptos";
+import {MaybeHexString} from "../../../context/wallet/context";
 
 type AddressesListProps = {
   proposal: Proposal;
