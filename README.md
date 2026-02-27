@@ -43,6 +43,7 @@ Use Vite-prefixed env variables:
 
 - `VITE_GA_TRACKING_ID`
 - `VITE_ADOBE_FONTS` (optional; when omitted, Adobe Typekit is not loaded)
+- `VITE_BASE_PATH` (default `/`; for static hosting under a subpath use `/<repo>/`)
 - `VITE_APTOS_DEVNET_URL`
 - `VITE_INDEXER_GRAPHQL_MAINNET`
 - `VITE_INDEXER_GRAPHQL_TESTNET`
@@ -60,6 +61,15 @@ Legacy -> Vite mapping:
 - `REACT_APP_INDEXER_GRAPHQL_DEVNET` -> `VITE_INDEXER_GRAPHQL_DEVNET`
 - `APTOS_DEVNET_URL` -> `VITE_APTOS_DEVNET_URL`
 - `GA_TRACKING_ID` -> `VITE_GA_TRACKING_ID`
+
+## GitHub Pages
+
+This repo includes `.github/workflows/deploy-pages.yml` for GitHub Pages deployment.
+
+- Default base path is `/` (root).
+- To deploy under a repo subpath, set repository variable `GH_PAGES_REPO_NAME` to your repository name.
+  - Example: `aptos-governance` -> build base path becomes `/aptos-governance/`
+- The workflow sets `VITE_BASE_PATH` at build time and also adds `dist/404.html` for SPA route refresh fallback.
 
 ## Quality Gates
 

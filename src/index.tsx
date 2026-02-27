@@ -7,6 +7,16 @@ import ReactGA from "react-ga4";
 
 ReactGA.initialize(import.meta.env.VITE_GA_TRACKING_ID || "G-NW8SFC1RKX");
 
+function normalizeRouterBasePath(basePath?: string): string {
+  if (!basePath) return "/";
+  const trimmed = basePath.trim();
+  if (trimmed === "" || trimmed === "/") return "/";
+  const withoutEdges = trimmed.replace(/^\/+|\/+$/g, "");
+  return `/${withoutEdges}`;
+}
+
+const routerBasePath = normalizeRouterBasePath(import.meta.env.VITE_BASE_PATH);
+
 const adobeFontsKey = import.meta.env.VITE_ADOBE_FONTS;
 if (adobeFontsKey) {
   const link = document.createElement("link");
@@ -36,7 +46,7 @@ if (!root) {
 ReactDOM.createRoot(root).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
+      <BrowserRouter basename={routerBasePath}>
         <GovernanceRoutes />
       </BrowserRouter>
     </QueryClientProvider>
