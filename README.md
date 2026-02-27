@@ -34,6 +34,8 @@ Open `http://localhost:5173`.
 - `pnpm test:watch`: run tests in watch mode
 - `pnpm typecheck`: run TypeScript type checking
 - `pnpm fmt`: format source files with Prettier
+- `pnpm fmt:check`: verify formatting with Prettier
+- `pnpm lint`: run ESLint
 
 ## Environment Variables
 
@@ -64,6 +66,8 @@ Legacy -> Vite mapping:
 Run before creating a PR:
 
 ```bash
+pnpm lint
+pnpm fmt:check
 pnpm typecheck
 pnpm test
 pnpm build

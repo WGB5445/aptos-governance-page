@@ -29,7 +29,7 @@ test.each(addresses)(
   "current wallet address %i matches delegated voter address %i",
   async (walletAddress, delegatedVoterAddress) => {
     vi.spyOn(sdk, "getAccountResource").mockResolvedValue({
-      type: "",
+      type: "0x1::stake::StakePool",
       data: {
         delegated_voter: delegatedVoterAddress,
       },

@@ -17,13 +17,6 @@ if (adobeFontsKey) {
 
 // TODO: add Sentry
 
-// inform the compiler of the existence of the window.aptos API
-declare global {
-  interface Window {
-    aptos: any;
-  }
-}
-
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -35,20 +28,17 @@ const queryClient = new QueryClient({
   },
 });
 
-// delay rendering the application until the window.onload event has fired when integrating with the window.aptos API
-window.addEventListener("load", () => {
-  const root = document.getElementById("root");
-  if (!root) {
-    throw new Error("Missing root element");
-  }
+const root = document.getElementById("root");
+if (!root) {
+  throw new Error("Missing root element");
+}
 
-  ReactDOM.createRoot(root).render(
-    <React.StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <GovernanceRoutes />
-        </BrowserRouter>
-      </QueryClientProvider>
-    </React.StrictMode>,
-  );
-});
+ReactDOM.createRoot(root).render(
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <GovernanceRoutes />
+      </BrowserRouter>
+    </QueryClientProvider>
+  </React.StrictMode>,
+);

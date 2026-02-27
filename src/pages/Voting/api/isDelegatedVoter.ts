@@ -1,10 +1,16 @@
-import {BCS, HexString, MaybeHexString, TxnBuilderTypes} from "aptos";
+import {AccountAddress} from "@aptos-labs/ts-sdk";
 import {getAccountResource} from "../../../api";
 import {GlobalState} from "../../../context/globalState/context";
+import {MaybeHexString} from "../../../context/wallet/context";
 
 type StakePool = {
   delegated_voter: string;
 };
+
+function normalizeAddress(address: string): string {
+  const hex = address.toLowerCase().replace(/^0x/, "");
+  return `0x${hex.padStart(64, "0")}`;
+}
 
 export default async function isDelegatedVoter(
   poolAddress: string,
@@ -21,18 +27,9 @@ export default async function isDelegatedVoter(
     const {delegated_voter: deligatedVoter} =
       stakePoolRecordResource.data as StakePool;
 
-    const currentWalletAddressFromHex =
-      TxnBuilderTypes.AccountAddress.fromHex(currentWalletAddress);
-    const deligatedVoterAddressFromHex =
-      TxnBuilderTypes.AccountAddress.fromHex(deligatedVoter);
-
     return (
-      HexString.fromUint8Array(
-        BCS.bcsToBytes(deligatedVoterAddressFromHex),
-      ).hex() ===
-      HexString.fromUint8Array(
-        BCS.bcsToBytes(currentWalletAddressFromHex),
-      ).hex()
+      AccountAddress.from(normalizeAddress(deligatedVoter)).toStringLong() ===
+      AccountAddress.from(normalizeAddress(currentWalletAddress)).toStringLong()
     );
   } catch (e) {
     return false;
