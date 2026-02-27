@@ -44,6 +44,10 @@ Use Vite-prefixed env variables:
 - `VITE_GA_TRACKING_ID`
 - `VITE_ADOBE_FONTS` (optional; when omitted, Adobe Typekit is not loaded)
 - `VITE_BASE_PATH` (default `/`; for static hosting under a subpath use `/<repo>/`)
+- `VITE_APTOS_API_KEY` (optional fallback key for custom/fullnode endpoints)
+- `VITE_APTOS_API_KEY_MAINNET` (optional)
+- `VITE_APTOS_API_KEY_TESTNET` (optional)
+- `VITE_APTOS_API_KEY_DEVNET` (optional)
 - `VITE_APTOS_DEVNET_URL`
 - `VITE_INDEXER_GRAPHQL_MAINNET`
 - `VITE_INDEXER_GRAPHQL_TESTNET`
