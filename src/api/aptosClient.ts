@@ -1,16 +1,17 @@
 import {Aptos, AptosConfig, Network} from "@aptos-labs/ts-sdk";
 
 function getApiKey(networkValue: string): string | undefined {
-  if (networkValue.includes("mainnet")) {
-    return "AG-JJUCSHK3XMWV3XFNH7LZ7AMPCKYDLWW9Y";
+  const normalized = networkValue.toLowerCase();
+  if (normalized.includes("mainnet")) {
+    return import.meta.env.VITE_APTOS_API_KEY_MAINNET;
   }
-  if (networkValue.includes("testnet")) {
-    return "AG-KMOTRHDA8GPQHMT9NNEF5NK1ONSRV327V";
+  if (normalized.includes("testnet")) {
+    return import.meta.env.VITE_APTOS_API_KEY_TESTNET;
   }
-  if (networkValue.includes("devnet")) {
-    return "AG-HR9VQNGZFUEKBCPWMH1OXC669PEXDZB3O";
+  if (normalized.includes("devnet")) {
+    return import.meta.env.VITE_APTOS_API_KEY_DEVNET;
   }
-  return undefined;
+  return import.meta.env.VITE_APTOS_API_KEY;
 }
 
 export function getNetworkFromNodeUrl(nodeUrl: string): Network {
