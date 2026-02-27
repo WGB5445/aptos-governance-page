@@ -14,11 +14,11 @@ import {NetworkName} from "../../constants";
 function getGraphqlURI(networkName: NetworkName): string | undefined {
   switch (networkName) {
     case "mainnet":
-      return process.env.REACT_APP_INDEXER_GRAPHQL_MAINNET;
+      return import.meta.env.VITE_INDEXER_GRAPHQL_MAINNET;
     case "testnet":
-      return process.env.REACT_APP_INDEXER_GRAPHQL_TESTNET;
+      return import.meta.env.VITE_INDEXER_GRAPHQL_TESTNET;
     case "Devnet":
-      return process.env.REACT_APP_INDEXER_GRAPHQL_DEVNET;
+      return import.meta.env.VITE_INDEXER_GRAPHQL_DEVNET;
     case "local":
       return undefined;
     default:

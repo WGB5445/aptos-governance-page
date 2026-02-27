@@ -2,7 +2,8 @@
  * Network
  */
 export const devnetUrl =
-  process.env.APTOS_DEVNET_URL || "https://fullnode.devnet.aptoslabs.com/";
+  import.meta.env.VITE_APTOS_DEVNET_URL ||
+  "https://fullnode.devnet.aptoslabs.com/";
 
 export const networks = {
   mainnet: "https://fullnode.mainnet.aptoslabs.com/",
