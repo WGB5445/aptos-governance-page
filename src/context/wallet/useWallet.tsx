@@ -8,7 +8,7 @@ function normalizeNetworkName(networkName?: string | null): WalletNetworks {
   if (normalized === "testnet") return "testnet";
   if (normalized === "devnet") return "devnet";
   if (normalized === "local") return "local";
-  return "";
+  return "mainnet";
 }
 
 export function useWallet() {

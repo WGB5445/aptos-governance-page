@@ -7,7 +7,6 @@ const stakePoolAddress =
 
 const mockState: GlobalState = {
   network_name: "local",
-  network_value: "mock-url",
 };
 
 const addresses = [

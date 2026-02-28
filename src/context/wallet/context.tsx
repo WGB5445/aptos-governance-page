@@ -23,4 +23,4 @@ export const useWalletContext = () => {
   return context;
 };
 
-export type WalletNetworks = "mainnet" | "testnet" | "devnet" | "local" | "";
+export type WalletNetworks = "mainnet" | "testnet" | "devnet" | "local";

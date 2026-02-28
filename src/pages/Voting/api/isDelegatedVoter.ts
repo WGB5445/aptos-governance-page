@@ -21,14 +21,14 @@ export default async function isDelegatedVoter(
   try {
     const stakePoolRecordResource = await getAccountResource(
       {address: poolAddress, resourceType: "0x1::stake::StakePool"},
-      state.network_value,
+      state.network_name,
     );
 
-    const {delegated_voter: deligatedVoter} =
+    const {delegated_voter: delegatedVoter} =
       stakePoolRecordResource.data as StakePool;
 
     return (
-      AccountAddress.from(normalizeAddress(deligatedVoter)).toStringLong() ===
+      AccountAddress.from(normalizeAddress(delegatedVoter)).toStringLong() ===
       AccountAddress.from(normalizeAddress(currentWalletAddress)).toStringLong()
     );
   } catch (e) {

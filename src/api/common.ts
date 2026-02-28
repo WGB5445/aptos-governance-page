@@ -1,1 +1,1 @@
-export {getConfig, getAptosClient, getNetworkFromNodeUrl} from "./aptosClient";
+export {getAptosClient, getNetworkFromName} from "./aptosClient";
