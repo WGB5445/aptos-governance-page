@@ -58,7 +58,9 @@ const useSubmitTransaction = () => {
       setTransactionResponse({
         transactionSubmitted: false,
         message:
-          error instanceof Error ? error.message : String(error ?? "Unknown Error"),
+          error instanceof Error
+            ? error.message
+            : String(error ?? "Unknown Error"),
       });
       setTransactionInProcess(false);
     }

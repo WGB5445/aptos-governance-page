@@ -189,7 +189,11 @@ function getProposalState(proposal: Proposal): ProposalVotingState {
     const yesVotes = parseInt(proposal.yes_votes);
     const noVotes = parseInt(proposal.no_votes);
     const minVoteThreshold = proposal.min_vote_threshold;
-    const enoughVotes = votesAboveThreshold(yesVotes, noVotes, minVoteThreshold);
+    const enoughVotes = votesAboveThreshold(
+      yesVotes,
+      noVotes,
+      minVoteThreshold,
+    );
 
     if (yesVotes <= noVotes && enoughVotes) {
       return ProposalVotingState.REJECTED; // more "no" votes

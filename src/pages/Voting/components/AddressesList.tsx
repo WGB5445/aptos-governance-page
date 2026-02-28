@@ -116,9 +116,7 @@ export default function AddressesList({
   );
 
   const fetchAccounts = useCallback(
-    async (
-      poolAddresses: CurrentStakingPoolVoter,
-    ): Promise<void> => {
+    async (poolAddresses: CurrentStakingPoolVoter): Promise<void> => {
       setMapLoading(true);
       const map = poolAddresses.current_staking_pool_voter.map(
         async (poolAddress) => {
@@ -167,8 +165,8 @@ export default function AddressesList({
       <Stack sx={{width: "100%"}} mt={4}>
         <Typography variant="h4" mb={4}>
           We couldn&apos;t find any staking pool addresses, make sure you are
-          connected with your voter account. If you&apos;re delegated staking user,
-          use https://govscan.live/aptos/proposals to vote instead.
+          connected with your voter account. If you&apos;re delegated staking
+          user, use https://govscan.live/aptos/proposals to vote instead.
         </Typography>
       </Stack>
     );

@@ -23,7 +23,9 @@ export function getNetworkFromName(networkName: string): Network {
 export function getAptosClient(networkName: string): Aptos {
   const network = getNetworkFromName(networkName);
   const apiKey = getApiKey(networkName);
-  const fullnodeConfig = apiKey ? ({API_KEY: apiKey} as ClientConfig) : undefined;
+  const fullnodeConfig = apiKey
+    ? ({API_KEY: apiKey} as ClientConfig)
+    : undefined;
   return new Aptos(
     new AptosConfig({
       network,
