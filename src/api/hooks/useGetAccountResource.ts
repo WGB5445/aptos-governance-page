@@ -17,7 +17,7 @@ export function useGetAccountResource(
 ): useGetAccountResourceResponse {
   const [state, _setState] = useGlobalState();
   const accountResourcesResult = useQuery<MoveResource, ResponseError>(
-    ["accountResource", {address}, state.network_name],
+    ["accountResource", {address, resource}, state.network_name],
     () =>
       getAccountResource({address, resourceType: resource}, state.network_name),
     {refetchOnWindowFocus: false},
