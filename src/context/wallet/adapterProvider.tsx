@@ -8,6 +8,7 @@ function mapNetworkName(networkName: string): Network {
   if (normalized === "mainnet") return Network.MAINNET;
   if (normalized === "testnet") return Network.TESTNET;
   if (normalized === "devnet") return Network.DEVNET;
+  if (normalized === "local") return Network.LOCAL;
   return Network.CUSTOM;
 }
 

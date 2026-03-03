@@ -10,6 +10,7 @@ export function useGetTransaction(txnHashOrVersion: string) {
   const result = useQuery<TransactionResponse, ResponseError>(
     ["transaction", {txnHashOrVersion}, state.network_name],
     () => getTransaction({txnHashOrVersion}, state.network_name),
+    {enabled: !!txnHashOrVersion},
   );
 
   return result;

@@ -11,12 +11,13 @@ function getApiKey(networkName: string): string | undefined {
   return import.meta.env.VITE_APTOS_API_KEY;
 }
 
-/** Map network id (e.g. mainnet, testnet) to SDK Network. */
+/** Map network id (e.g. mainnet, testnet, local) to SDK Network. */
 export function getNetworkFromName(networkName: string): Network {
   const normalized = networkName.toLowerCase();
   if (normalized === "mainnet") return Network.MAINNET;
   if (normalized === "testnet") return Network.TESTNET;
   if (normalized === "devnet") return Network.DEVNET;
+  if (normalized === "local") return Network.LOCAL;
   return Network.CUSTOM;
 }
 
@@ -26,6 +27,7 @@ export function getAptosClient(networkName: string): Aptos {
   const fullnodeConfig = apiKey
     ? ({API_KEY: apiKey} as ClientConfig)
     : undefined;
+
   return new Aptos(
     new AptosConfig({
       network,
