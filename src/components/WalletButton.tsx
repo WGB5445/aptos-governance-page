@@ -35,7 +35,7 @@ export const WalletButton = (): JSX.Element => {
             fontSize: "0 !important",
           },
           ".wallet-button .MuiSvgIcon-root + .MuiTypography-root::after": {
-            content: '"create an account"',
+            content: '"Connect Wallet"',
             fontSize: "1rem !important",
             lineHeight: "1.25 !important",
           },
