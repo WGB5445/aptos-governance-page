@@ -16,10 +16,6 @@ export function getTransaction(
   networkName: string,
 ): Promise<TransactionResponse> {
   const {txnHashOrVersion} = requestParameters;
-  const str = String(txnHashOrVersion).trim();
-  if (!str) {
-    return Promise.reject(new Error("txnHashOrVersion must be non-empty"));
-  }
   if (isHex(txnHashOrVersion as string)) {
     return getTransactionByHash(txnHashOrVersion as string, networkName);
   } else {

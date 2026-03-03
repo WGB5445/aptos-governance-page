@@ -25,7 +25,6 @@ export function useWallet() {
   const isInstalled = useMemo(() => wallets.length > 0, [wallets.length]);
 
   const isConnected = connected;
-  const isAccountSet = isInstalled;
   const accountAddress: MaybeHexString | null =
     account?.address.toString() ?? null;
   const walletNetwork: WalletNetworks = normalizeNetworkName(network?.name);
@@ -42,7 +41,6 @@ export function useWallet() {
 
   return {
     isInstalled,
-    isAccountSet,
     isConnected,
     accountAddress,
     walletNetwork,
