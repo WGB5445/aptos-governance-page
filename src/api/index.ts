@@ -13,21 +13,21 @@ import {getAptosClient} from "./common";
 
 export function getTransaction(
   requestParameters: {txnHashOrVersion: string | number},
-  nodeUrl: string,
+  networkName: string,
 ): Promise<TransactionResponse> {
   const {txnHashOrVersion} = requestParameters;
   if (isHex(txnHashOrVersion as string)) {
-    return getTransactionByHash(txnHashOrVersion as string, nodeUrl);
+    return getTransactionByHash(txnHashOrVersion as string, networkName);
   } else {
-    return getTransactionByVersion(txnHashOrVersion as number, nodeUrl);
+    return getTransactionByVersion(txnHashOrVersion as number, networkName);
   }
 }
 
 function getTransactionByVersion(
   version: number,
-  nodeUrl: string,
+  networkName: string,
 ): Promise<TransactionResponse> {
-  const client = getAptosClient(nodeUrl);
+  const client = getAptosClient(networkName);
   return withResponseError(
     client.getTransactionByVersion({ledgerVersion: BigInt(version)}),
   );
@@ -35,9 +35,9 @@ function getTransactionByVersion(
 
 function getTransactionByHash(
   hash: string,
-  nodeUrl: string,
+  networkName: string,
 ): Promise<TransactionResponse> {
-  const client = getAptosClient(nodeUrl);
+  const client = getAptosClient(networkName);
   return withResponseError(
     client.getTransactionByHash({transactionHash: hash}),
   );
@@ -45,18 +45,18 @@ function getTransactionByHash(
 
 export function getAccount(
   requestParameters: {address: string},
-  nodeUrl: string,
+  networkName: string,
 ): Promise<AccountData> {
-  const client = getAptosClient(nodeUrl);
+  const client = getAptosClient(networkName);
   const {address} = requestParameters;
   return withResponseError(client.getAccountInfo({accountAddress: address}));
 }
 
 export function getAccountResources(
   requestParameters: {address: AccountAddressInput; ledgerVersion?: number},
-  nodeUrl: string,
+  networkName: string,
 ): Promise<MoveResource[]> {
-  const client = getAptosClient(nodeUrl);
+  const client = getAptosClient(networkName);
   const {address, ledgerVersion} = requestParameters;
   return withResponseError(
     client.getAccountResources({
@@ -70,13 +70,13 @@ export function getAccountResources(
 
 export function getAccountResource(
   requestParameters: {
-    address: string;
+    address: AccountAddressInput;
     resourceType: string;
     ledgerVersion?: number;
   },
-  nodeUrl: string,
+  networkName: string,
 ): Promise<MoveResource> {
-  const client = getAptosClient(nodeUrl);
+  const client = getAptosClient(networkName);
   const {address, resourceType, ledgerVersion} = requestParameters;
   return withResponseError(
     client.getAccountResource({
@@ -91,9 +91,9 @@ export function getAccountResource(
 
 export function getAccountModules(
   requestParameters: {address: string; ledgerVersion?: number},
-  nodeUrl: string,
+  networkName: string,
 ): Promise<MoveModuleBytecode[]> {
-  const client = getAptosClient(nodeUrl);
+  const client = getAptosClient(networkName);
   const {address, ledgerVersion} = requestParameters;
   return withResponseError(
     client.getAccountModules({
@@ -107,9 +107,9 @@ export function getAccountModules(
 
 export function getTableItem(
   requestParameters: {tableHandle: string; data: TableItemRequest},
-  nodeUrl: string,
-): Promise<any> {
-  const client = getAptosClient(nodeUrl);
+  networkName: string,
+): Promise<unknown> {
+  const client = getAptosClient(networkName);
   const {tableHandle, data} = requestParameters;
   return withResponseError(client.getTableItem({handle: tableHandle, data}));
 }

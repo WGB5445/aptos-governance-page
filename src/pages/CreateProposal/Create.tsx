@@ -4,17 +4,13 @@ import {
   Account,
   AccountAddress,
   Aptos,
-  AptosConfig,
   Ed25519PrivateKey,
   InputGenerateTransactionPayloadData,
 } from "@aptos-labs/ts-sdk";
 import {getHexString} from "../utils";
 import {useGlobalState} from "../../context/globalState";
 import {doTransaction} from "../utils";
-import {getNetworkFromNodeUrl} from "../../api/common";
-
-/* REQUIRED: Please replace the following with your own local network urls */
-const FAUCET_URL = "http://127.0.0.1:80";
+import {getAptosClient} from "../../api/common";
 
 /* OPTIONAL: Please replace the following with your own test data */
 const TEST_EXECUTION_HASH =
@@ -60,13 +56,7 @@ export function Create() {
   };
 
   const onCreateProposalClick = async () => {
-    const client = new Aptos(
-      new AptosConfig({
-        network: getNetworkFromNodeUrl(state.network_value),
-        fullnode: state.network_value,
-        faucet: FAUCET_URL,
-      }),
-    );
+    const client = getAptosClient(state.network_name);
 
     const account = Account.fromPrivateKey({
       privateKey: new Ed25519PrivateKey(accountSecretKey),

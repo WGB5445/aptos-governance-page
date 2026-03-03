@@ -1,5 +1,5 @@
 import {InputGenerateTransactionPayloadData} from "@aptos-labs/ts-sdk";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {useWallet as useAdapterWallet} from "@aptos-labs/wallet-adapter-react";
 
 import {useWalletContext} from "../../context/wallet/context";
@@ -30,13 +30,7 @@ const useSubmitTransaction = () => {
   const [state, _] = useGlobalState();
   const {walletNetwork} = useWalletContext();
   const {signAndSubmitTransaction} = useAdapterWallet();
-  const client = getAptosClient(state.network_value);
-
-  useEffect(() => {
-    if (transactionResponse !== null) {
-      setTransactionInProcess(false);
-    }
-  }, [transactionResponse]);
+  const client = getAptosClient(state.network_name);
 
   async function submitTransaction(
     payload: InputGenerateTransactionPayloadData,
@@ -59,11 +53,16 @@ const useSubmitTransaction = () => {
         transactionSubmitted: true,
         transactionHash: response.hash,
       });
-    } catch (error: any) {
+      setTransactionInProcess(false);
+    } catch (error: unknown) {
       setTransactionResponse({
         transactionSubmitted: false,
-        message: error?.message ?? "Unknown Error",
+        message:
+          error instanceof Error
+            ? error.message
+            : String(error ?? "Unknown Error"),
       });
+      setTransactionInProcess(false);
     }
   }
 

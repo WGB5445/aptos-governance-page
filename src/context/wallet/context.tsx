@@ -5,7 +5,6 @@ export type MaybeHexString = string;
 export interface walletContext {
   isInstalled: boolean;
   isConnected: boolean;
-  isAccountSet: boolean;
   walletNetwork: WalletNetworks;
   accountAddress: MaybeHexString | null;
   connect: () => Promise<void>;
@@ -23,4 +22,4 @@ export const useWalletContext = () => {
   return context;
 };
 
-export type WalletNetworks = "mainnet" | "testnet" | "devnet" | "local" | "";
+export type WalletNetworks = "mainnet" | "testnet" | "devnet" | "local";

@@ -14,6 +14,10 @@ const useSubmitIncreaseLock = () => {
       function: "0x1::stake::increase_lockup",
       typeArguments: [],
       functionArguments: [],
+      abi: {
+        typeParameters: [],
+        parameters: [],
+      },
     };
 
     await submitTransaction(payload);

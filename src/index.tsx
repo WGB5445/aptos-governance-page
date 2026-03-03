@@ -7,15 +7,19 @@ import ReactGA from "react-ga4";
 
 ReactGA.initialize(import.meta.env.VITE_GA_TRACKING_ID || "G-NW8SFC1RKX");
 
-function normalizeRouterBasePath(basePath?: string): string {
+// Must match vite.config.ts normalizeBasePath: same env and trim logic.
+// Vite base uses a trailing slash (e.g. /my-app/); React Router basename must not.
+function getRouterBasename(): string {
+  const basePath = import.meta.env.VITE_BASE_PATH;
   if (!basePath) return "/";
   const trimmed = basePath.trim();
   if (trimmed === "" || trimmed === "/") return "/";
   const withoutEdges = trimmed.replace(/^\/+|\/+$/g, "");
-  return `/${withoutEdges}`;
+  const viteBase = `/${withoutEdges}/`;
+  return viteBase === "/" ? "/" : viteBase.replace(/\/$/, "");
 }
 
-const routerBasePath = normalizeRouterBasePath(import.meta.env.VITE_BASE_PATH);
+const routerBasePath = getRouterBasename();
 
 const adobeFontsKey = import.meta.env.VITE_ADOBE_FONTS;
 if (adobeFontsKey) {

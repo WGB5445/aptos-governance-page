@@ -50,10 +50,10 @@ async function fetchTotalSupply(
       tableHandle: aggregatorData.handle,
       data: tableItemRequest,
     },
-    state.network_value,
+    state.network_name,
   );
 
-  return parseInt(supplyLimit);
+  return parseInt(String(supplyLimit));
 }
 
 export function useGetCoinSupplyLimit(): number | null {

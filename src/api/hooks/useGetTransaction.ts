@@ -8,8 +8,9 @@ export function useGetTransaction(txnHashOrVersion: string) {
   const [state, _setState] = useGlobalState();
 
   const result = useQuery<TransactionResponse, ResponseError>(
-    ["transaction", {txnHashOrVersion}, state.network_value],
-    () => getTransaction({txnHashOrVersion}, state.network_value),
+    ["transaction", {txnHashOrVersion}, state.network_name],
+    () => getTransaction({txnHashOrVersion}, state.network_name),
+    {enabled: !!txnHashOrVersion},
   );
 
   return result;

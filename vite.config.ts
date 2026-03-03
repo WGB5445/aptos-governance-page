@@ -16,7 +16,16 @@ export default defineConfig(({mode}) => {
 
   return {
     base,
-    plugins: [react(), svgr()],
+    plugins: [
+      react(),
+      svgr(),
+      {
+        name: "html-base-url",
+        transformIndexHtml(html) {
+          return html.replace(/%BASE_URL%/g, base);
+        },
+      },
+    ],
     test: {
       environment: "jsdom",
       globals: true,

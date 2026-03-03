@@ -10,8 +10,8 @@ export function useGetAccountResources(
   const [state, _setState] = useGlobalState();
 
   const accountResourcesResult = useQuery<Array<MoveResource>, ResponseError>(
-    ["accountResources", {address}, state.network_value],
-    () => getAccountResources({address}, state.network_value),
+    ["accountResources", {address}, state.network_name],
+    () => getAccountResources({address}, state.network_name),
   );
 
   return accountResourcesResult;

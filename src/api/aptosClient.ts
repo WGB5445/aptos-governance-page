@@ -1,48 +1,37 @@
-import {Aptos, AptosConfig, Network} from "@aptos-labs/ts-sdk";
+import {Aptos, AptosConfig, ClientConfig, Network} from "@aptos-labs/ts-sdk";
 
-function getApiKey(networkValue: string): string | undefined {
-  const normalized = networkValue.toLowerCase();
-  if (normalized.includes("mainnet")) {
+/** Resolves API key from env by network; used for fullnode auth to avoid rate limits. */
+function getApiKey(networkName: string): string | undefined {
+  const normalized = networkName.toLowerCase();
+  if (normalized === "mainnet")
     return import.meta.env.VITE_APTOS_API_KEY_MAINNET;
-  }
-  if (normalized.includes("testnet")) {
+  if (normalized === "testnet")
     return import.meta.env.VITE_APTOS_API_KEY_TESTNET;
-  }
-  if (normalized.includes("devnet")) {
-    return import.meta.env.VITE_APTOS_API_KEY_DEVNET;
-  }
+  if (normalized === "devnet") return import.meta.env.VITE_APTOS_API_KEY_DEVNET;
   return import.meta.env.VITE_APTOS_API_KEY;
 }
 
-export function getNetworkFromNodeUrl(nodeUrl: string): Network {
-  const normalized = nodeUrl.toLowerCase();
-  if (normalized.includes("mainnet")) return Network.MAINNET;
-  if (normalized.includes("testnet")) return Network.TESTNET;
-  if (normalized.includes("devnet")) return Network.DEVNET;
+/** Map network id (e.g. mainnet, testnet, local) to SDK Network. */
+export function getNetworkFromName(networkName: string): Network {
+  const normalized = networkName.toLowerCase();
+  if (normalized === "mainnet") return Network.MAINNET;
+  if (normalized === "testnet") return Network.TESTNET;
+  if (normalized === "devnet") return Network.DEVNET;
+  if (normalized === "local") return Network.LOCAL;
   return Network.CUSTOM;
 }
 
-export function getConfig(networkValue: string): AptosConfig {
-  const network = getNetworkFromNodeUrl(networkValue);
-  const clientConfig = {
-    API_KEY: getApiKey(networkValue),
-  };
+export function getAptosClient(networkName: string): Aptos {
+  const network = getNetworkFromName(networkName);
+  const apiKey = getApiKey(networkName);
+  const fullnodeConfig: ClientConfig | undefined = apiKey
+    ? {API_KEY: apiKey}
+    : undefined;
 
-  // For built-in networks, let the SDK use its canonical api.* /v1 endpoints.
-  if (network !== Network.CUSTOM) {
-    return new AptosConfig({
+  return new Aptos(
+    new AptosConfig({
       network,
-      clientConfig,
-    });
-  }
-
-  return new AptosConfig({
-    network,
-    fullnode: networkValue,
-    clientConfig,
-  });
-}
-
-export function getAptosClient(networkValue: string): Aptos {
-  return new Aptos(getConfig(networkValue));
+      fullnodeConfig,
+    }),
+  );
 }
